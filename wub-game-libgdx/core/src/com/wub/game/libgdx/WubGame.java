@@ -20,9 +20,10 @@ public class WubGame extends ApplicationAdapter {
 
     // Images
     private Texture bg480p;
+    private Texture disc480p;
 
     //Stages
-    private Stage mainMenu;
+    private Stage playStage;
 
     @Override
     public void create() {
@@ -32,6 +33,7 @@ public class WubGame extends ApplicationAdapter {
 
         // LOAD ASSETS
         bg480p = new Texture("bg480x800.png");
+        disc480p = new Texture("disc_outer.png");
 
 
         // SET UP STAGES AND ACTORS
@@ -39,15 +41,20 @@ public class WubGame extends ApplicationAdapter {
         bgDisc.setTexture(bg480p);
         bgDisc.setPosition(0, 0);
 
-        // mainMenu Stage Setup
-        mainMenu = new Stage(viewport, batch);
-        mainMenu.addActor(bgDisc);
+        GameActor dscOuter = new GameActor();
+        dscOuter.setTexture(disc480p);
+        dscOuter.setCenterPosition(WIDTH / 2, HEIGHT / 2);
+
+        // playStage Stage Setup
+        playStage = new Stage(viewport, batch);
+        playStage.addActor(bgDisc);
+        playStage.addActor(dscOuter);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mainMenu.draw();
+        playStage.draw();
     }
 
     @Override
@@ -57,6 +64,6 @@ public class WubGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        mainMenu.dispose();
+        playStage.dispose();
     }
 }

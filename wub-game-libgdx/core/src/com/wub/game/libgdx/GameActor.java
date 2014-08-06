@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class GameActor extends Actor {
     private Texture texture;
 
-    public void setTexture(Texture texture) { this.texture = texture; }
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+        this.setSize(texture.getWidth(), texture.getHeight());
+    }
 
     @Override
     public void draw(Batch batch, float alpha) {
