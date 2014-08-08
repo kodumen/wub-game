@@ -65,6 +65,7 @@ public class Spin extends Action {
 //        }
 
         actor.rotateBy(direction * speed * deltaTime);
+        actor.updateCollider();
 
         return false;   // Return false so as not to finish the act on the first run.
     }

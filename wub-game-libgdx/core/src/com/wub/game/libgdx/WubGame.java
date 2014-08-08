@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wub.game.libgdx.actions.Spin;
@@ -16,6 +19,7 @@ public class WubGame extends ApplicationAdapter {
     private final int WIDTH = 480, HEIGHT = 800;
 
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private Camera camera;
     private Viewport viewport;
 
@@ -30,6 +34,7 @@ public class WubGame extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
         viewport = new FitViewport(WIDTH, HEIGHT, camera);
 
@@ -53,6 +58,11 @@ public class WubGame extends ApplicationAdapter {
         shaft.setX((WIDTH / 2) - (shaftTex.getWidth() / 2));
         shaft.setY(HEIGHT / 2);
         shaft.setOrigin(shaft.getWidth() / 2, 0);
+        shaft.setCollider(new float[]{
+                0f, shaft.getHeight() - 64f,
+                0f, shaft.getHeight(),
+                shaft.getWidth(), shaft.getHeight(),
+                shaft.getWidth(), shaft.getHeight() - 64f});
         shaft.addAction(new Spin(25.5f, Spin.CLOCKWISE));
 
         // playStage Stage Setup
@@ -67,6 +77,7 @@ public class WubGame extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         playStage.act();
         playStage.draw();
+        drawColliders(playStage, shapeRenderer);
     }
 
     @Override
@@ -77,5 +88,22 @@ public class WubGame extends ApplicationAdapter {
     @Override
     public void dispose() {
         playStage.dispose();
+    }
+
+    public void drawColliders(Stage stage, ShapeRenderer shapeRenderer) {
+        camera.update();
+        shapeRenderer.setProjectionMatrix(camera.combined); // This is just standard procedure. I don't really know what's happening.
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0, 1, 1, 1);
+
+        Array<Actor> actors = stage.getActors();
+        for(int i = 0; i < actors.size; i++) {
+            GameActor actor = (GameActor)actors.get(i);
+            if(!actor.hasCollider()) continue;
+            shapeRenderer.polygon(actor.getCollider());
+        }
+
+        shapeRenderer.end();
     }
 }
