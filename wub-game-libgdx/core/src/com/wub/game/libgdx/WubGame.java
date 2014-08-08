@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wub.game.libgdx.actions.Spin;
 
 public class WubGame extends ApplicationAdapter {
     private final int WIDTH = 480, HEIGHT = 800;
@@ -21,6 +22,7 @@ public class WubGame extends ApplicationAdapter {
     // Images
     private Texture bg480p;
     private Texture disc480p;
+    private Texture shaftTex;
 
     //Stages
     private Stage playStage;
@@ -34,7 +36,7 @@ public class WubGame extends ApplicationAdapter {
         // LOAD ASSETS
         bg480p = new Texture("bg480x800.png");
         disc480p = new Texture("disc_outer.png");
-
+        shaftTex = new Texture("shaft.png");
 
         // SET UP STAGES AND ACTORS
         GameActor bgDisc = new GameActor();
@@ -45,15 +47,25 @@ public class WubGame extends ApplicationAdapter {
         dscOuter.setTexture(disc480p);
         dscOuter.setCenterPosition(WIDTH / 2, HEIGHT / 2);
 
+        GameActor shaft = new GameActor();
+        shaft.setName("shaft");
+        shaft.setTexture(shaftTex);
+        shaft.setX((WIDTH / 2) - (shaftTex.getWidth() / 2));
+        shaft.setY(HEIGHT / 2);
+        shaft.setOrigin(shaft.getWidth() / 2, 0);
+        shaft.addAction(new Spin(25.5f, Spin.CLOCKWISE));
+
         // playStage Stage Setup
         playStage = new Stage(viewport, batch);
         playStage.addActor(bgDisc);
         playStage.addActor(dscOuter);
+        playStage.addActor(shaft);
     }
 
     @Override
     public void render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        playStage.act();
         playStage.draw();
     }
 

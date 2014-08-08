@@ -2,6 +2,7 @@ package com.wub.game.libgdx;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class GameActor extends Actor {
     private Texture texture;
+    private Polygon collider;
 
     public void setTexture(Texture texture) {
         this.texture = texture;
@@ -17,6 +19,8 @@ public class GameActor extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.draw(texture, this.getX(), this.getY());
+        batch.draw(texture, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(),
+                this.getWidth(), this.getHeight(), this.getScaleX(), this.getScaleY(), this.getRotation(),
+                0, 0, texture.getWidth(), texture.getHeight(), false, false);
     }
 }
