@@ -37,21 +37,7 @@ public class Spin extends Action {
         if(actor == null) actor = (GameActor)getActor();
 
         // DESKTOP/HTML5
-        if(keyReleased && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            keyReleased = false;
-
-            if(firstRun) {
-                speed = initSpeed;
-                firstRun = false;
-            }
-            else direction *= -1;
-        }
-        else if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            keyReleased = true;
-        }
-
-        // ANDROID
-//        if(keyReleased && Gdx.input.isTouched()) {
+//        if(keyReleased && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 //            keyReleased = false;
 //
 //            if(firstRun) {
@@ -60,9 +46,23 @@ public class Spin extends Action {
 //            }
 //            else direction *= -1;
 //        }
-//        else if(!Gdx.input.isTouched()){
+//        else if(!Gdx.input.isKeyPressed(Input.Keys.SPACE)){
 //            keyReleased = true;
 //        }
+
+        // ANDROID
+        if(keyReleased && Gdx.input.isTouched()) {
+            keyReleased = false;
+
+            if(firstRun) {
+                speed = initSpeed;
+                firstRun = false;
+            }
+            else direction *= -1;
+        }
+        else if(!Gdx.input.isTouched()){
+            keyReleased = true;
+        }
 
         actor.rotateBy(direction * speed * deltaTime);
         actor.updateCollider();

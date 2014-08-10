@@ -17,6 +17,8 @@ public class GameActor extends Actor {
         this.setSize(texture.getWidth(), texture.getHeight());
     }
 
+    public Texture getTexture() { return texture; }
+
     public void setCollider(float[] vertices) {
         collider = new Polygon(vertices);
         collider.setPosition(this.getX(), this.getY());

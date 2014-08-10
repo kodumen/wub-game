@@ -27,6 +27,7 @@ public class WubGame extends ApplicationAdapter {
     private Texture bg480p;
     private Texture disc480p;
     private Texture shaftTex;
+    public Texture pieGreen;
 
     //Stages
     private Stage playStage;
@@ -42,6 +43,7 @@ public class WubGame extends ApplicationAdapter {
         bg480p = new Texture("bg480x800.png");
         disc480p = new Texture("disc_outer.png");
         shaftTex = new Texture("shaft.png");
+        pieGreen = new Texture("pie_green.png");
 
         // SET UP STAGES AND ACTORS
         GameActor bgDisc = new GameActor();
@@ -52,24 +54,47 @@ public class WubGame extends ApplicationAdapter {
         dscOuter.setTexture(disc480p);
         dscOuter.setCenterPosition(WIDTH / 2, HEIGHT / 2);
 
+        // SHAFT!
         GameActor shaft = new GameActor();
         shaft.setName("shaft");
         shaft.setTexture(shaftTex);
-        shaft.setX((WIDTH / 2) - (shaftTex.getWidth() / 2));
+        shaft.setX((WIDTH / 2) - (shaft.getWidth() / 2));
         shaft.setY(HEIGHT / 2);
         shaft.setOrigin(shaft.getWidth() / 2, 0);
         shaft.setCollider(new float[]{
                 0f, shaft.getHeight() - 64f,
                 0f, shaft.getHeight(),
                 shaft.getWidth(), shaft.getHeight(),
-                shaft.getWidth(), shaft.getHeight() - 64f});
+                shaft.getWidth(), shaft.getHeight() - 64f
+        });
         shaft.addAction(new Spin(25.5f, Spin.CLOCKWISE));
+
+        // Basic Pie
+        GameActor basicPie = new GameActor();
+        basicPie.setName("pie");
+        basicPie.setTexture(pieGreen);     // This is temporary
+        basicPie.setX((WIDTH / 2) - (basicPie.getWidth() / 2));
+        basicPie.setY(HEIGHT / 2);
+        basicPie.setOrigin(basicPie.getWidth() / 2, 0);
+        basicPie.setCollider(new float[]{
+                0f, basicPie.getHeight() - 24f,
+                0f, basicPie.getHeight(),
+                basicPie.getWidth(), basicPie.getHeight(),
+                basicPie.getWidth(), basicPie.getHeight() - 24f
+        });
 
         // playStage Stage Setup
         playStage = new Stage(viewport, batch);
         playStage.addActor(bgDisc);
         playStage.addActor(dscOuter);
         playStage.addActor(shaft);
+        playStage.addActor(basicPie);
+
+        // Set z index only after adding actor to stage
+        bgDisc.setZIndex(0);
+        basicPie.setZIndex(1);
+        dscOuter.setZIndex(2);
+        shaft.setZIndex(3);
     }
 
     @Override
