@@ -11,6 +11,7 @@ public class DesktopLauncher {
         config.resizable = false;
         config.width = 360;
         config.height = 600;
+        config.resizable = true;
 		new LwjglApplication(new WubGame(), config);
 	}
 }
