@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "wub wub";
         config.resizable = false;
-        config.width = 360;
-        config.height = 600;
+        config.width = 480;
+        config.height = 800;
         config.resizable = true;
 		new LwjglApplication(new WubGame(), config);
 	}
