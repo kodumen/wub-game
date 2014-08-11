@@ -3,10 +3,10 @@ package com.wub.game.libgdx;
 /**
  * Created by R on 8/10/2014.
  */
-public abstract class GameBehavior {
-    private GameObject gameObject;
+public abstract class GameComponent {
+    protected GameObject gameObject;
 
-    public GameBehavior() {
+    public GameComponent() {
         gameObject = null;
     }
 

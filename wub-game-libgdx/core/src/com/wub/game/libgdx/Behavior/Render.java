@@ -1,12 +1,12 @@
 package com.wub.game.libgdx.Behavior;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.wub.game.libgdx.GameBehavior;
+import com.wub.game.libgdx.GameComponent;
 
 /**
  * Created by R on 8/11/2014.
  */
-public class Render extends GameBehavior {
+public class Render extends GameComponent {
     private Texture texture;
 
     public Render() {
@@ -24,8 +24,8 @@ public class Render extends GameBehavior {
 
     public void setTexture(Texture texture) {
         this.texture = texture;
-        this.getGameObject().transform.setWidth(this.texture.getWidth());
-        this.getGameObject().transform.setHeight(this.texture.getHeight());
+        gameObject.transform.setWidth(this.texture.getWidth());
+        gameObject.transform.setHeight(this.texture.getHeight());
     }
 
     @Override

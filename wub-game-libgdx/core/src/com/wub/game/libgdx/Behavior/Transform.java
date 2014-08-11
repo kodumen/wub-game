@@ -1,11 +1,11 @@
 package com.wub.game.libgdx.Behavior;
 
-import com.wub.game.libgdx.GameBehavior;
+import com.wub.game.libgdx.GameComponent;
 
 /**
  * Created by R on 8/11/2014.
  */
-public class Transform extends GameBehavior {
+public class Transform extends GameComponent {
     private float x, y;
     private float originX, originY;
     private float scaleX, scaleY;
@@ -53,6 +53,10 @@ public class Transform extends GameBehavior {
         return rotation;
     }
 
+    /***
+     * Set the rotation in degrees.
+     * @param rotation angle in degrees.
+     */
     public void setRotation(float rotation) {
         this.rotation = rotation;
     }
@@ -118,6 +122,10 @@ public class Transform extends GameBehavior {
     public void setSize(float width, float height) {
         setWidth(width);
         setHeight(height);
+    }
+
+    public void rotateBy(float angle) {
+        setRotation(getRotation() + angle);
     }
 
     @Override

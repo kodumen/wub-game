@@ -14,13 +14,13 @@ public class GameObject {
     public Transform transform;
     public Render render;
     private String name;
-    private OrderedMap<String, GameBehavior> components;
+    private OrderedMap<String, GameComponent> components;
     private GameObject parent;
     private Array<GameObject> children;
 
     public GameObject(String name) {
         this.name = name;
-        components = new OrderedMap<String, GameBehavior>(5);
+        components = new OrderedMap<String, GameComponent>(5);
         children = new Array<GameObject>();
         parent = null;
 
@@ -45,7 +45,7 @@ public class GameObject {
         return components.containsKey(key);
     }
 
-    public void addComponent(GameBehavior component) {
+    public void addComponent(GameComponent component) {
         String compName = component.getClass().getSimpleName();
         compName.replace("[", "");
         compName.replace("]", "");
@@ -53,14 +53,14 @@ public class GameObject {
         component.setGameObject(this);
     }
 
-    public GameBehavior getComponent(String key) {
+    public GameComponent getComponent(String key) {
         return components.get(key);
     }
 
     public void update(float deltaTime) {
         if (components.size > 0) {
-            Iterator<GameBehavior> compIterator = components.values();
-            GameBehavior comp;
+            Iterator<GameComponent> compIterator = components.values();
+            GameComponent comp;
             while (compIterator.hasNext()) {
                 comp = compIterator.next();
                 comp.update(deltaTime);

@@ -7,10 +7,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.wub.game.libgdx.Behavior.Collider;
 
 public class WubGame extends ApplicationAdapter {
+    private SpriteBatch spritebatch;
+    private ShapeRenderer shapeRenderer;
+    private Camera camera;
+    private Viewport viewport;
+
     public static final int WIDTH = 480, HEIGHT = 800;
     // Textures
     public static Texture BG480p;
@@ -20,9 +27,6 @@ public class WubGame extends ApplicationAdapter {
     public static Texture PIE_1;
     public static Texture PIE_2;
     public static Texture PIE_3;
-    SpriteBatch spritebatch;
-    Camera camera;
-    Viewport viewport;
     // Game Objects
     private GameObject playScreen;
 
@@ -30,6 +34,7 @@ public class WubGame extends ApplicationAdapter {
     @Override
     public void create() {
         spritebatch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
         viewport = new FitViewport(WIDTH, HEIGHT, camera);
 
@@ -57,6 +62,7 @@ public class WubGame extends ApplicationAdapter {
         playScreen.add(shaft);
 
         // Add behaviors/components to objects
+        shaft.addComponent(new Collider());
 
         // Set behavior/component properties
         bg00.render.setTexture(BG480p);
@@ -67,10 +73,12 @@ public class WubGame extends ApplicationAdapter {
         shaft.transform.setX(WIDTH / 2 - shaft.transform.getWidth() / 2);
         shaft.transform.setY(HEIGHT / 2);
         shaft.transform.setOrigin(shaft.transform.getWidth() / 2, 0f);
+        ((Collider)shaft.getComponent("Collider")).setPolygon();
     }
 
     @Override
     public void render() {
+        camera.update();
         playScreen.update(Gdx.graphics.getDeltaTime());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -78,6 +86,12 @@ public class WubGame extends ApplicationAdapter {
         spritebatch.begin();
         draw(playScreen, spritebatch);
         spritebatch.end();
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0, 1, 1, 1);
+        drawColliders(playScreen, shapeRenderer);
+        shapeRenderer.end();
 
         // HOLY SHIT AN FPS COUNTER!
 //        Gdx.graphics.setTitle("Wub Wub @ " + Gdx.graphics.getFramesPerSecond() + "FPS");
@@ -102,6 +116,17 @@ public class WubGame extends ApplicationAdapter {
         if (gameObject.hasChildren()) {
             for(int i = 0; i < gameObject.getChildren().size; i++)
                 draw(gameObject.getChild(i), batch);
+        }
+    }
+
+    public void drawColliders(GameObject gameObject, ShapeRenderer shapeRenderer) {
+        if (gameObject.hasComponent("Collider")) {
+            shapeRenderer.polygon(((Collider)gameObject.getComponent("Collider")).getCollider());
+        }
+
+        if (gameObject.hasChildren()) {
+            for(int i = 0; i < gameObject.getChildren().size; i++)
+                drawColliders(gameObject.getChild(i), shapeRenderer);
         }
     }
 }
