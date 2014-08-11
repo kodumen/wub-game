@@ -11,12 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class WubGame extends ApplicationAdapter {
-    SpriteBatch spritebatch;
-    Camera camera;
-    Viewport viewport;
-
     public static final int WIDTH = 480, HEIGHT = 800;
-
     // Textures
     public static Texture BG480p;
     public static Texture DSCOUT;
@@ -25,7 +20,9 @@ public class WubGame extends ApplicationAdapter {
     public static Texture PIE_1;
     public static Texture PIE_2;
     public static Texture PIE_3;
-
+    SpriteBatch spritebatch;
+    Camera camera;
+    Viewport viewport;
     // Game Objects
     private GameObject playScreen;
 
@@ -48,11 +45,28 @@ public class WubGame extends ApplicationAdapter {
         // CREATE GAME OBJECTS
         // Play Screen
         playScreen = new GameObject("PlayScreen");
+
+        // Initialize objects
         GameObject bg00 = new GameObject();
-        bg00.texture = BG480p;
+        GameObject bg01 = new GameObject();
+        GameObject shaft = new GameObject("Shaft");
 
+        // Add objects to scene
         playScreen.add(bg00);
+        playScreen.add(bg01);
+        playScreen.add(shaft);
 
+        // Add behaviors/components to objects
+
+        // Set behavior/component properties
+        bg00.render.setTexture(BG480p);
+        bg01.render.setTexture(DSCOUT);
+        bg01.transform.setX(WIDTH / 2 - bg01.transform.getWidth() / 2);
+        bg01.transform.setY(HEIGHT / 2 - bg01.transform.getHeight() / 2);
+        shaft.render.setTexture(SHAFT);
+        shaft.transform.setX(WIDTH / 2 - shaft.transform.getWidth() / 2);
+        shaft.transform.setY(HEIGHT / 2);
+        shaft.transform.setOrigin(shaft.transform.getWidth() / 2, 0f);
     }
 
     @Override
@@ -60,22 +74,29 @@ public class WubGame extends ApplicationAdapter {
         playScreen.update(Gdx.graphics.getDeltaTime());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        spritebatch.setProjectionMatrix(camera.combined);
         spritebatch.begin();
         draw(playScreen, spritebatch);
         spritebatch.end();
+
+        // HOLY SHIT AN FPS COUNTER!
+//        Gdx.graphics.setTitle("Wub Wub @ " + Gdx.graphics.getFramesPerSecond() + "FPS");
     }
 
     @Override
     public void resize(int width, int height) {
-        camera.update();
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     public void draw(GameObject gameObject, SpriteBatch batch) {
-        if(gameObject.hasTexture()) {
-            batch.draw(gameObject.texture, gameObject.x, gameObject.y, gameObject.originX, gameObject.originY,
-                    gameObject.getWidth(), gameObject.getHeight(), 1f, 1f, gameObject.rotation,
-                    0, 0, (int) gameObject.getWidth(), (int) gameObject.getHeight(), false, false);
+        if (gameObject.render.hasTexture()) {
+            batch.draw(gameObject.render.getTexture(), gameObject.transform.getX(), gameObject.transform.getY(),
+                    gameObject.transform.getOriginX(), gameObject.transform.getOriginY(),
+                    gameObject.transform.getWidth(), gameObject.transform.getHeight(),
+                    gameObject.transform.getScaleX(), gameObject.transform.getScaleY(),
+                    gameObject.transform.getRotation(),
+                    0, 0, (int) gameObject.transform.getWidth(), (int) gameObject.transform.getHeight(),
+                    false, false);
         }
 
         if (gameObject.hasChildren()) {
