@@ -2,6 +2,7 @@ package com.wub.game.libgdx;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
+import com.wub.game.libgdx.Behavior.Collider;
 import com.wub.game.libgdx.Behavior.Render;
 import com.wub.game.libgdx.Behavior.Transform;
 
@@ -61,10 +62,17 @@ public class GameObject {
         if (components.size > 0) {
             Iterator<GameComponent> compIterator = components.values();
             GameComponent comp;
+            Collider collider = null;
             while (compIterator.hasNext()) {
                 comp = compIterator.next();
+                if(comp.getClass() == Collider.class) {
+                    collider = (Collider)comp;
+                    continue;
+                }
                 comp.update(deltaTime);
             }
+            // Update collider last
+            if(collider != null) collider.update(deltaTime);
         }
 
         if (children != null)

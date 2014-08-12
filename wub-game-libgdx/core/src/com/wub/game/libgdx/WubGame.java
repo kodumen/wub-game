@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wub.game.libgdx.Behavior.Collider;
+import com.wub.game.libgdx.Behavior.ShaftAction;
 
 public class WubGame extends ApplicationAdapter {
     private SpriteBatch spritebatch;
@@ -63,6 +64,7 @@ public class WubGame extends ApplicationAdapter {
 
         // Add behaviors/components to objects
         shaft.addComponent(new Collider());
+        shaft.addComponent(new ShaftAction());
 
         // Set behavior/component properties
         bg00.render.setTexture(BG480p);
@@ -74,6 +76,9 @@ public class WubGame extends ApplicationAdapter {
         shaft.transform.setY(HEIGHT / 2);
         shaft.transform.setOrigin(shaft.transform.getWidth() / 2, 0f);
         ((Collider)shaft.getComponent("Collider")).setPolygon();
+        ShaftAction shaftAction = (ShaftAction)shaft.getComponent("ShaftAction");
+        shaftAction.setSpeed(25f);
+        shaftAction.setInitDirection(ShaftAction.CLKWISE);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class WubGame extends ApplicationAdapter {
         shapeRenderer.end();
 
         // HOLY SHIT AN FPS COUNTER!
-//        Gdx.graphics.setTitle("Wub Wub @ " + Gdx.graphics.getFramesPerSecond() + "FPS");
+        Gdx.graphics.setTitle(Gdx.graphics.getFramesPerSecond() + "FPS");
     }
 
     @Override
