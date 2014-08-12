@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wub.game.libgdx.Behavior.Collider;
+import com.wub.game.libgdx.Behavior.PieAction;
 import com.wub.game.libgdx.Behavior.ShaftAction;
 
 public class WubGame extends ApplicationAdapter {
@@ -48,23 +49,24 @@ public class WubGame extends ApplicationAdapter {
         PIE_2 = new Texture("pie_purple.png");
         PIE_3 = new Texture("pie_red.png");
 
-        // CREATE GAME OBJECTS
-        // Play Screen
         playScreen = new GameObject("PlayScreen");
-
-        // Initialize objects
         GameObject bg00 = new GameObject();
         GameObject bg01 = new GameObject();
         GameObject shaft = new GameObject("Shaft");
+        GameObject pie = new GameObject("Pie");
+        GameObject pieSlice = new GameObject("PieSlice");
 
         // Add objects to scene
         playScreen.add(bg00);
         playScreen.add(bg01);
         playScreen.add(shaft);
+        playScreen.add(pie, 1);
 
         // Add behaviors/components to objects
         shaft.addComponent(new Collider());
         shaft.addComponent(new ShaftAction());
+        pieSlice.addComponent(new Collider());
+        pie.addComponent(new PieAction());
 
         // Set behavior/component properties
         bg00.render.setTexture(BG480p);
@@ -79,6 +81,20 @@ public class WubGame extends ApplicationAdapter {
         ShaftAction shaftAction = (ShaftAction)shaft.getComponent("ShaftAction");
         shaftAction.setSpeed(25f);
         shaftAction.setInitDirection(ShaftAction.CLKWISE);
+        pieSlice.render.setTexture(PIE_0);
+        pieSlice.transform.setX(WIDTH / 2 - pieSlice.transform.getWidth() / 2);
+        pieSlice.transform.setY(HEIGHT / 2);
+        pieSlice.transform.setOrigin(pieSlice.transform.getWidth() / 2, 0f);
+        pieSlice.transform.setRotation(11.25f);
+        ((Collider)pieSlice.getComponent("Collider")).setPolygon(new float[]{
+                0f, pieSlice.transform.getHeight() - 12f,
+                0f, pieSlice.transform.getHeight(),
+                pieSlice.transform.getWidth(), pieSlice.transform.getHeight(),
+                pieSlice.transform.getWidth(), pieSlice.transform.getHeight() - 12f
+        });
+        PieAction pieAction = (PieAction)pie.getComponent("PieAction");
+        pieAction.setPieSlice(pieSlice);
+        pieAction.create();
     }
 
     @Override
@@ -86,12 +102,14 @@ public class WubGame extends ApplicationAdapter {
         camera.update();
         playScreen.update(Gdx.graphics.getDeltaTime());
 
+        // Draw Render Textures
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spritebatch.setProjectionMatrix(camera.combined);
         spritebatch.begin();
         draw(playScreen, spritebatch);
         spritebatch.end();
 
+        // Draw Collider Polygons
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0, 1, 1, 1);

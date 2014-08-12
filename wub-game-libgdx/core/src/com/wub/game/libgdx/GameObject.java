@@ -71,7 +71,8 @@ public class GameObject {
                 }
                 comp.update(deltaTime);
             }
-            // Update collider last
+            // Update collider last after all other components are updated.
+            // This ensures that the collider will always be inline with the object's current transformation.
             if(collider != null) collider.update(deltaTime);
         }
 

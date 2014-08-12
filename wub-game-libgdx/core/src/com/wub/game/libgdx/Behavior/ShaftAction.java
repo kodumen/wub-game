@@ -22,6 +22,16 @@ public class ShaftAction extends GameComponent {
         touched = false;
     }
 
+    @Override
+    public void update(float deltaTime) {
+        if(Gdx.input.isTouched() && !touched) {
+            touched = true;
+            direction = direction == 0f ? initDirection : -direction;
+        }
+        else if(!Gdx.input.isTouched() && touched) touched = false;
+        gameObject.transform.rotateBy(direction * speed * deltaTime);
+    }
+
     public int getDirection() {
         return direction;
     }
@@ -40,15 +50,5 @@ public class ShaftAction extends GameComponent {
 
     public void setInitDirection(int initDirection) {
         this.initDirection = initDirection;
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        if(Gdx.input.isTouched() && !touched) {
-            touched = true;
-            direction = direction == 0f ? initDirection : -direction;
-        }
-        else if(!Gdx.input.isTouched() && touched) touched = false;
-        gameObject.transform.rotateBy(direction * speed * deltaTime);
     }
 }

@@ -28,6 +28,10 @@ public class Render extends GameComponent {
         gameObject.transform.setHeight(this.texture.getHeight());
     }
 
+    public void removeTexture() {
+        this.texture = null;
+    }
+
     @Override
     public void update(float deltaTime) {
 
