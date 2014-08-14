@@ -52,7 +52,6 @@ public class GameObject {
         compName.replace("]", "");
         components.put(compName, component);
         component.setGameObject(this);
-        component.create();
     }
 
     public GameComponent getComponent(String key) {

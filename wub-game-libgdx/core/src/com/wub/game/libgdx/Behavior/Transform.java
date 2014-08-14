@@ -12,26 +12,26 @@ public class Transform extends GameComponent {
     private float width, height;
     private float rotation;
 
-//    public Transform() {
-//        this(0, 0);
-//    }
-//
-//    public Transform(float x, float y) {
-//        this(x, y, 0, 0, 1, 1, 0);
-//    }
-//
-//    public Transform(float x, float y, float originX, float originY, float scaleX, float scaleY, float rotation) {
-//        super();
-//        this.x = x;
-//        this.y = y;
-//        this.originX = originX;
-//        this.originY = originY;
-//        this.scaleX = scaleX;
-//        this.scaleY = scaleY;
-//        this.width = 0;
-//        this.height = 0;
-//        this.rotation = rotation;
-//    }
+    public Transform() {
+        this(0, 0);
+    }
+
+    public Transform(float x, float y) {
+        this(x, y, 0, 0, 1, 1, 0);
+    }
+
+    public Transform(float x, float y, float originX, float originY, float scaleX, float scaleY, float rotation) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.originX = originX;
+        this.originY = originY;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.width = 0;
+        this.height = 0;
+        this.rotation = rotation;
+    }
 
     public float getScaleX() {
         return scaleX;
@@ -131,14 +131,5 @@ public class Transform extends GameComponent {
     @Override
     public void update(float deltaTime) {
 
-    }
-
-    @Override
-    public void create() {
-        this.x = this.y = 0;
-        this.originX = this.originY = 0;
-        this.scaleX = this.scaleY = 1;
-        this.rotation = 0;
-        this.width = this.height = 0;
     }
 }

@@ -15,25 +15,18 @@ public class ShaftAction extends GameComponent {
 
     public static final int STOP = 0, CLKWISE = -1, CCLKWISE = 1;
 
-    @Override
-    public void create() {
+    public ShaftAction() {
+        super();
         speed = 0f;
         direction = STOP;
         touched = false;
     }
-
-//    public ShaftAction() {
-//
-//        super();
-//    }
-
 
     @Override
     public void update(float deltaTime) {
         if(Gdx.input.isTouched() && !touched) {
             touched = true;
             direction = direction == 0f ? initDirection : -direction;
-            // TODO check collision
         }
         else if(!Gdx.input.isTouched() && touched) touched = false;
         gameObject.transform.rotateBy(direction * speed * deltaTime);
