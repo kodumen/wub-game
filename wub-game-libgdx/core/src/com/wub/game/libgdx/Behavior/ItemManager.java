@@ -62,11 +62,7 @@ public class ItemManager extends GameComponent {
             int itemNum;
             ItemType itemType1;
             do {
-<<<<<<< HEAD
                 itemNum = (int)(Math.random() * itemCount);
-=======
-                itemNum = (int)(Math.random() * (itemCount - 1)) + 1;
->>>>>>> parent of 1298e24... Modified randomization
                 itemType1 = (ItemType)gameObject.getChild(itemNum).getComponent("ItemType");
             } while(itemType1.getType() != ItemType.NONE);
             itemType1.randomizeType();
