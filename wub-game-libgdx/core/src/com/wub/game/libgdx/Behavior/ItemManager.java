@@ -50,7 +50,7 @@ public class ItemManager extends GameComponent {
             int itemNum;
             ItemType itemType1;
             do {
-                itemNum = (int)(Math.random() * (itemCount - 1)) + 1;
+                itemNum = (int)(Math.random() * itemCount);
                 itemType1 = (ItemType)gameObject.getChild(itemNum).getComponent("ItemType");
             } while(itemType1.getType() != ItemType.NONE);
             itemType1.randomizeType();
