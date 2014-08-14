@@ -48,7 +48,7 @@ public class ItemType extends GameComponent {
     }
 
     public void randomizeType() {
-        setType((int)(Math.random() * (BOMB - SCORE1 + 1)) + SCORE1);
+        setType((int)(Math.random() * (BOMB - NONE + 1)) + NONE);
         setTextureFromType();
     }
 
