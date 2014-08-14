@@ -9,10 +9,10 @@ import com.wub.game.libgdx.GameComponent;
 public class Render extends GameComponent {
     private Texture texture;
 
-    public Render() {
-        super();
-        texture = null;
-    }
+//    public Render() {
+//        super();
+//
+//    }
 
     public boolean hasTexture() {
         return texture != null;
@@ -35,5 +35,10 @@ public class Render extends GameComponent {
     @Override
     public void update(float deltaTime) {
 
+    }
+
+    @Override
+    public void create() {
+        texture = null;
     }
 }

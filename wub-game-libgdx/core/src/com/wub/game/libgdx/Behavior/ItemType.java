@@ -13,13 +13,10 @@ public class ItemType extends GameComponent {
     private float coolDownTime;
     private boolean start;
 
-    public ItemType() {
-        super();
-        type = NONE;
-        timer = 0;
-        coolDownTime = 0;
-        start = false;
-    }
+//    public ItemType() {
+//        super();
+//
+//    }
 
     @Override
     public void update(float deltaTime) {
@@ -29,6 +26,14 @@ public class ItemType extends GameComponent {
             randomizeType();
             stopTimer();
         }
+    }
+
+    @Override
+    public void create() {
+        type = NONE;
+        timer = 0;
+        coolDownTime = 0;
+        start = false;
     }
 
     public int getType() {

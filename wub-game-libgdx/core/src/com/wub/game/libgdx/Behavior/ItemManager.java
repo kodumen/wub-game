@@ -13,6 +13,18 @@ public class ItemManager extends GameComponent {
     private int maxItemCount;       // Maximum number of items present at the same time.
 
     public void create() {
+        item = null;
+        itemCount = 0;
+        startItemCount = 0;
+        maxItemCount = 0;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+
+    }
+
+    private void initialize() {
         // Add disc items
         Collider itemCollider = (Collider) item.getComponent("Collider");
         ItemType itemType = (ItemType)item.getComponent("ItemType");
@@ -50,16 +62,11 @@ public class ItemManager extends GameComponent {
             int itemNum;
             ItemType itemType1;
             do {
-                itemNum = (int)(Math.random() * itemCount) + 1;
+                itemNum = (int)(Math.random() * itemCount);
                 itemType1 = (ItemType)gameObject.getChild(itemNum).getComponent("ItemType");
             } while(itemType1.getType() != ItemType.NONE);
             itemType1.randomizeType();
         }
-    }
-
-    @Override
-    public void update(float deltaTime) {
-
     }
 
     public void setItem(GameObject item) {

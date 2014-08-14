@@ -10,20 +10,20 @@ import com.wub.game.libgdx.GameObject;
 public class Collider extends GameComponent {
     private Polygon polygon;
 
-    public Collider() {
-        this.polygon = new Polygon();
-    }
+//    public Collider() {
+//        this.polygon = new Polygon();
+//    }
+//
+//    public Collider(float[] vertices) {
+//        super();
+//        this.polygon = new Polygon(vertices);
+//    }
 
-    public Collider(float[] vertices) {
-        super();
-        this.polygon = new Polygon(vertices);
-    }
-
-    @Override
-    public void setGameObject(GameObject gameObject) {
-        super.setGameObject(gameObject);
-        update(0);
-    }
+//    @Override
+//    public void setGameObject(GameObject gameObject) {
+//        super.setGameObject(gameObject);
+//        update(0);
+//    }
 
     public Polygon getPolygon() {
         return polygon;
@@ -55,5 +55,11 @@ public class Collider extends GameComponent {
         polygon.setOrigin(gameObject.transform.getOriginX(), gameObject.transform.getOriginY());
         polygon.setScale(gameObject.transform.getScaleX(), gameObject.transform.getScaleY());
         polygon.setRotation(gameObject.transform.getRotation());
+    }
+
+    @Override
+    public void create() {
+        this.polygon = new Polygon();
+        update(0);
     }
 }

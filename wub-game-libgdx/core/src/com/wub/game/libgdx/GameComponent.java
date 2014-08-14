@@ -4,7 +4,7 @@ package com.wub.game.libgdx;
  * Created by R on 8/10/2014.
  */
 public abstract class GameComponent {
-    protected GameObject gameObject;
+    protected GameObject gameObject = null;
 
     public GameComponent() {
         gameObject = null;
@@ -19,4 +19,6 @@ public abstract class GameComponent {
     }
 
     public abstract void update(float deltaTime);
+
+    public abstract void create();
 }
