@@ -76,6 +76,7 @@ public class GameObject {
             if(collider != null) collider.update(deltaTime);
         }
 
+        // Update children
         if (children != null)
             for (int i = 0; i < children.size; i++)
                 children.get(i).update(deltaTime);

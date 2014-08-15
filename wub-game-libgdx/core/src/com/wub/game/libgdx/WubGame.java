@@ -101,6 +101,7 @@ public class WubGame extends ApplicationAdapter {
                 item.transform.getWidth(), item.transform.getHeight() - 24f
         });
         ItemType itemType = (ItemType)item.getComponent("ItemType");
+        itemType.setFadeDuration(0.5f);
         itemType.setType(ItemType.NONE);
         itemType.setTextureFromType();
         ItemManager itemManager = (ItemManager)itemGroup.getComponent("ItemManager");

@@ -29,8 +29,9 @@ public class ItemType extends GameComponent {
     public void update(float deltaTime) {
         timer += startFadeIn || startFadeOut ? deltaTime : 0f;
 
-        if(startFadeIn) gameObject.render.setOpacity(timer / fadeDuration);
-        else if(startFadeOut) gameObject.render.setOpacity(1f - (timer / fadeDuration));
+        float opacity = timer / fadeDuration;
+        if(startFadeIn) gameObject.render.setOpacity(opacity >= 1f ? 1f : opacity);
+        else if(startFadeOut) gameObject.render.setOpacity(1f - (opacity >= 1f ? 1f : opacity));
 
         if(timer >= fadeDuration) {
             timer = 0f;
@@ -126,5 +127,9 @@ public class ItemType extends GameComponent {
         timer = 0f;
         status = this.INACTIVE;
         gameObject.render.setOpacity(1f);
+    }
+
+    public float getFadeDuration() {
+        return fadeDuration;
     }
 }

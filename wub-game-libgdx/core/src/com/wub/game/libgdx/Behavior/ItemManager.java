@@ -52,6 +52,7 @@ public class ItemManager extends GameComponent {
             copyItem = (ItemType)copy.getComponent("ItemType");
             copyItem.setType(itemType.getType());
             copyItem.setTextureFromType();
+            copyItem.setFadeDuration(itemType.getFadeDuration());
 
             // Add as child of gameObject
             gameObject.add(copy);
