@@ -1,5 +1,6 @@
 package com.wub.game.libgdx.Behavior;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.wub.game.libgdx.GameComponent;
 import com.wub.game.libgdx.WubGame;
 
@@ -67,7 +68,7 @@ public class ItemType extends GameComponent {
      * Picks a random type from SCORE1 to BOMB (NONE not included) and assigns the appropriate texture.
      */
     public void randomizeType() {
-        setType((int)(Math.random() * (BOMB - SCORE1 + 1)) + SCORE1);
+        setType((int)(MathUtils.random() * (BOMB - SCORE1 + 1)) + SCORE1);
         setTextureFromType();
     }
 
