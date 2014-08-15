@@ -109,6 +109,8 @@ public class WubGame extends ApplicationAdapter {
         ItemManager itemManager = (ItemManager)itemGroup.getComponent("ItemManager");
         itemManager.setItem(item);
         itemManager.setItemCount(12);
+        itemManager.setCoolDownTime(3f);
+        itemManager.setMaxItemCount(8);
         itemManager.setStartItemCount(3);
         itemManager.create();
     }

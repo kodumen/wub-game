@@ -63,7 +63,7 @@ public class ItemManager extends GameComponent {
             ItemType itemType1;
             do {
                 // Pick a random child from this GameObject.
-                itemNum = (int)(MathUtils.random() * itemCount);
+                itemNum = (int)(MathUtils.random(gameObject.getChildren().size - 1));
                 itemType1 = (ItemType)gameObject.getChild(itemNum).getComponent("ItemType");
             } while(itemType1.getType() != ItemType.NONE); // We can't set the type of a child if it already has one so we pick again.
             itemType1.randomizeType();
@@ -79,10 +79,29 @@ public class ItemManager extends GameComponent {
             // Count number of ACTIVE items.
             // If it's less than maxItemCount we get items that are IDLE.
             if(countStatus(ItemType.ACTIVE) < maxItemCount) {
+                timer = 0;
+                // Get IDLE items
+                Array<ItemType> idleChildren = new Array<ItemType>();
+                for(int i = 0; i < childItemTypes.size; i++)
+                    if(childItemTypes.get(i).getStatus() == ItemType.IDLE)
+                        idleChildren.add(childItemTypes.get(i));
 
+                // Pick a random type for a random item.
+                ItemType randIdle = null;
+                do {
+                    randIdle = childItemTypes.get(MathUtils.random(childItemTypes.size - 1));
+                } while(randIdle.getType() != ItemType.NONE);
+                randIdle.fadeIn();
             }
-            // We pick random types for a random number of IDLE items.
         }
+    }
+
+    /**
+     * Set the maximum amount of items to be present at the same time.
+     * @param maxItemCount
+     */
+    public void setMaxItemCount(int maxItemCount) {
+        this.maxItemCount = maxItemCount;
     }
 
     public void setCoolDownTime(float coolDownTime) {
