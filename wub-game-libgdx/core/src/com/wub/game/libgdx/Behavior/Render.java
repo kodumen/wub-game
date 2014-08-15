@@ -1,5 +1,6 @@
 package com.wub.game.libgdx.Behavior;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.wub.game.libgdx.GameComponent;
 
@@ -8,6 +9,7 @@ import com.wub.game.libgdx.GameComponent;
  */
 public class Render extends GameComponent {
     private Texture texture;
+    private Color color;
 
     public Render() {
         super();
@@ -30,6 +32,20 @@ public class Render extends GameComponent {
 
     public void removeTexture() {
         this.texture = null;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() { return color; }
+
+    /**
+     * Set this render's alpha.
+     * @param a alpha value between 0 and 1.
+     */
+    public void setOpacity(float a) {
+        this.color.a = a;
     }
 
     @Override

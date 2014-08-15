@@ -38,7 +38,6 @@ public class ItemManager extends GameComponent {
             ItemType copyItem;
             copy.addComponent(new ItemType());
             copyItem = (ItemType)copy.getComponent("ItemType");
-            copyItem.setCoolDownTime(itemType.getCoolDownTime());
             copyItem.setType(itemType.getType());
             copyItem.setTextureFromType();
 
