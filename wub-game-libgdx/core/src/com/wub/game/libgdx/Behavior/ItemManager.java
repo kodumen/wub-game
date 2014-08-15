@@ -1,6 +1,7 @@
 package com.wub.game.libgdx.Behavior;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.wub.game.libgdx.GameComponent;
 import com.wub.game.libgdx.GameObject;
 
@@ -14,7 +15,7 @@ public class ItemManager extends GameComponent {
     private int maxItemCount;       // Maximum number of items present at the same time.
     private float coolDownTime;     // Time between attempts of item generation.
     private float timer;
-    private ItemType[] childItemTypes;
+    private Array<ItemType> childItemTypes;
 
     /**
      * Initialize the ItemManager and generate starting items.
@@ -78,7 +79,7 @@ public class ItemManager extends GameComponent {
             // Count number of ACTIVE items.
             // If it's less than maxItemCount we get items that are IDLE.
             if(countStatus(ItemType.ACTIVE) < maxItemCount) {
-                
+
             }
             // We pick random types for a random number of IDLE items.
         }
@@ -120,10 +121,10 @@ public class ItemManager extends GameComponent {
      * Returns an array of the ItemType components of this gameObject's children.
      * @return ItemType array
      */
-    private ItemType[] getChildItemTypes() {
-        ItemType[] r = new ItemType[gameObject.getChildren().size];
+    private Array<ItemType> getChildItemTypes() {
+        Array<ItemType> r = new Array<ItemType>();
         for(int i = 0; i < gameObject.getChildren().size; i++)
-            r[i] = (ItemType)gameObject.getChild(i).getComponent("ItemType");
+            r.add((ItemType)gameObject.getChild(i).getComponent("ItemType"));
         return r;
     }
 
@@ -134,8 +135,8 @@ public class ItemManager extends GameComponent {
      */
     private int countStatus(int status) {
         int r = 0;
-        for(int i = 0; i < childItemTypes.length; i++)
-            if(childItemTypes[i].getStatus() == status) r++;
+        for(int i = 0; i < childItemTypes.size; i++)
+            if(childItemTypes.get(i).getStatus() == status) r++;
         return r;
     }
 }
