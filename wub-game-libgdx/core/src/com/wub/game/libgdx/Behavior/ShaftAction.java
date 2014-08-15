@@ -1,7 +1,9 @@
 package com.wub.game.libgdx.Behavior;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.wub.game.libgdx.GameComponent;
+import com.wub.game.libgdx.GameObject;
 
 /**
  * Created by R on 8/12/2014.
@@ -12,6 +14,7 @@ public class ShaftAction extends GameComponent {
     private boolean touched;
 
     private int initDirection;
+    private Array<GameObject> items;
 
     public static final int STOP = 0, CLKWISE = -1, CCLKWISE = 1;
 
@@ -20,6 +23,7 @@ public class ShaftAction extends GameComponent {
         speed = 0f;
         direction = STOP;
         touched = false;
+        items = null;
     }
 
     @Override
@@ -30,6 +34,14 @@ public class ShaftAction extends GameComponent {
         }
         else if(!Gdx.input.isTouched() && touched) touched = false;
         gameObject.transform.rotateBy(direction * speed * deltaTime);
+    }
+
+    /**
+     * Set items to check collision with. This would be the items Array.
+     * @param items
+     */
+    public void setItems(Array<GameObject> items) {
+        this.items = items;
     }
 
     public int getDirection() {

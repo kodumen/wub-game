@@ -21,7 +21,7 @@ public class ItemManager extends GameComponent {
      * Initialize the ItemManager and generate starting items.
      * Number of starting items are based on setStartItemCount.
      * Number of items set by setItemCount().
-     * Item to clone is set by setItem().
+     * Item to clone is set by setItems().
      */
     public void create() {
         // Clone item

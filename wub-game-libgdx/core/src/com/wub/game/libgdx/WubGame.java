@@ -111,6 +111,7 @@ public class WubGame extends ApplicationAdapter {
         itemManager.setMaxItemCount(8);
         itemManager.setStartItemCount(3);
         itemManager.create();
+        shaftAction.setItems(itemGroup.getChildren());
     }
 
     @Override
