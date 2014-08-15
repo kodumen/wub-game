@@ -12,6 +12,9 @@ public class ItemManager extends GameComponent {
     private int itemCount;
     private int startItemCount;     // Number of items to be generated first
     private int maxItemCount;       // Maximum number of items present at the same time.
+    private float coolDownTime;     // Time between attempts of item generation.
+    private float timer;
+    private ItemType[] childItemTypes;
 
     /**
      * Initialize the ItemManager and generate starting items.
@@ -64,11 +67,25 @@ public class ItemManager extends GameComponent {
             } while(itemType1.getType() != ItemType.NONE); // We can't set the type of a child if it already has one so we pick again.
             itemType1.randomizeType();
         }
+
+        childItemTypes = getChildItemTypes();
     }
 
     @Override
     public void update(float deltaTime) {
+        timer += deltaTime;
+        if(timer >= coolDownTime) {
+            // Count number of ACTIVE items.
+            // If it's less than maxItemCount we get items that are IDLE.
+            if(countStatus(ItemType.ACTIVE) < maxItemCount) {
+                
+            }
+            // We pick random types for a random number of IDLE items.
+        }
+    }
 
+    public void setCoolDownTime(float coolDownTime) {
+        this.coolDownTime = coolDownTime;
     }
 
     /**
@@ -97,5 +114,28 @@ public class ItemManager extends GameComponent {
      */
     public void setStartItemCount(int startItemCount) {
         this.startItemCount = startItemCount;
+    }
+
+    /**
+     * Returns an array of the ItemType components of this gameObject's children.
+     * @return ItemType array
+     */
+    private ItemType[] getChildItemTypes() {
+        ItemType[] r = new ItemType[gameObject.getChildren().size];
+        for(int i = 0; i < gameObject.getChildren().size; i++)
+            r[i] = (ItemType)gameObject.getChild(i).getComponent("ItemType");
+        return r;
+    }
+
+    /**
+     * Returns the number of children whose status is the same as the one specified.
+     * @param status status of the child.
+     * @return number of children with the same status.
+     */
+    private int countStatus(int status) {
+        int r = 0;
+        for(int i = 0; i < childItemTypes.length; i++)
+            if(childItemTypes[i].getStatus() == status) r++;
+        return r;
     }
 }
