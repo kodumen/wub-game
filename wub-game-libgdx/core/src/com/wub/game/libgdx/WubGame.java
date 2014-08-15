@@ -2,10 +2,7 @@ package com.wub.game.libgdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -145,6 +142,8 @@ public class WubGame extends ApplicationAdapter {
 
     public void draw(GameObject gameObject, SpriteBatch batch) {
         if (gameObject.render.hasTexture()) {
+            Color batchColor = batch.getColor();
+            batch.setColor(gameObject.render.getColor());
             batch.draw(gameObject.render.getTexture(), gameObject.transform.getX(), gameObject.transform.getY(),
                     gameObject.transform.getOriginX(), gameObject.transform.getOriginY(),
                     gameObject.transform.getWidth(), gameObject.transform.getHeight(),
@@ -152,6 +151,7 @@ public class WubGame extends ApplicationAdapter {
                     gameObject.transform.getRotation(),
                     0, 0, (int) gameObject.transform.getWidth(), (int) gameObject.transform.getHeight(),
                     false, false);
+            batch.setColor(batchColor);
         }
 
         if (gameObject.hasChildren()) {

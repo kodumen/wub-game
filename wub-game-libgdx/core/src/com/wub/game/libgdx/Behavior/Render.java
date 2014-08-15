@@ -14,8 +14,7 @@ public class Render extends GameComponent {
     public Render() {
         super();
         texture = null;
-        color = new Color();
-        color.a = 1;
+        color = new Color(1, 1, 1, 1);
     }
 
     public boolean hasTexture() {
