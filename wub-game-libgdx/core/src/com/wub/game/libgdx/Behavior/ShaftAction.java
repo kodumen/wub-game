@@ -12,6 +12,8 @@ public class ShaftAction extends GameComponent {
     public static final int STOP = 0, CLKWISE = -1, CCLKWISE = 1;
     private float speed;
     private float maxSpeed;
+    private float baseSpeed;
+    private float speedIncrease;
     private int direction;
     private boolean touched;
     private int initDirection;
@@ -36,7 +38,7 @@ public class ShaftAction extends GameComponent {
 
         if (Gdx.input.isTouched() && !touched) {
             touched = true;
-            // Get the itemColliders that collided with the shaft.
+            // Get the ItemType of object that collided with the shaft.
             ItemType itemType = getCollidedItemType(itemColliders);
             if (itemType != null) {
                 if (itemType.getStatus() != ItemType.IDLE) {
@@ -48,33 +50,35 @@ public class ShaftAction extends GameComponent {
                         TODO subtract from time
                         TODO shake cam (optional)
                          */
+                            this.speed = this.baseSpeed;
                             break;
                         case ItemType.BONUS:
                         /*
                         TODO increase speed
                         TODO add to time
                          */
-                            increaseSpeed(1.25f);
+                            increaseSpeed(speedIncrease);
                             break;
                         case ItemType.SCORE1:
                         /*
                         TODO increase speed
                         TODO score +1
                          */
-                            increaseSpeed(1.25f);
+                            increaseSpeed(speedIncrease);
                             break;
                         case ItemType.SCORE2:
                         /*
                         TODO increase speed
                         TODO score +2
                          */
-                            increaseSpeed(1.25f);
+                            increaseSpeed(speedIncrease);
                             break;
                         default:
                             break;
                     }
                 }
             }
+            // Switch direction of rotation
             direction = direction == 0f ? initDirection : -direction;
         } else if (!Gdx.input.isTouched() && touched) touched = false;
         gameObject.transform.rotateBy(direction * speed * deltaTime);
@@ -112,8 +116,15 @@ public class ShaftAction extends GameComponent {
         return speed;
     }
 
+    /**
+     * Set the speed of the shaft. Use this only once, preferably in the create() function of
+     * the game's class. This also sets the original speed of shaft. If you wish to change the speed, the only way is
+     * by the increaseSpeed() function.
+     * Other than that, there is none.
+     * @param speed
+     */
     public void setSpeed(float speed) {
-        this.speed = speed;
+        this.speed = this.baseSpeed = speed;
     }
 
     public void setMaxSpeed(float maxSpeed) {
@@ -122,6 +133,10 @@ public class ShaftAction extends GameComponent {
 
     private void increaseSpeed(float speed) {
         this.speed = this.speed < this.maxSpeed ? this.speed * speed : maxSpeed;
+    }
+
+    public void setSpeedIncrease(float speedIncrease) {
+        this.speedIncrease = speedIncrease;
     }
 
     public void setInitDirection(int initDirection) {
