@@ -86,6 +86,7 @@ public class WubGame extends ApplicationAdapter {
         ((Collider)shaft.getComponent("Collider")).setPolygon();
         ShaftAction shaftAction = (ShaftAction)shaft.getComponent("ShaftAction");
         shaftAction.setSpeed(25f);
+        shaftAction.setMaxSpeed(350f);
         shaftAction.setInitDirection(ShaftAction.CLKWISE);
 //        item.render.setTexture(PIE_0);
         item.transform.setWidth(PIE_0.getWidth());
