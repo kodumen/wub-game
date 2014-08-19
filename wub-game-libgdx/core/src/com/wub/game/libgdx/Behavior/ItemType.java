@@ -14,6 +14,8 @@ public class ItemType extends GameComponent {
     private int type;
     private float timer;
     private float fadeDuration;
+    private float bombLife;
+    private float bombTimer;
     private boolean startFadeIn, startFadeOut;
 
     public ItemType() {
@@ -22,6 +24,8 @@ public class ItemType extends GameComponent {
         timer = 0f;
         status = this.IDLE;
         fadeDuration = 0f;
+        bombLife = 0f;
+        bombTimer = 0f;
         startFadeIn = startFadeOut = false;
     }
 
@@ -41,6 +45,11 @@ public class ItemType extends GameComponent {
                 status = IDLE;
             }
             startFadeOut = startFadeIn = false;
+        }
+
+        if(type == BOMB) {
+            bombTimer += !startFadeOut ? deltaTime : 0f;
+            if(bombTimer >= bombLife) fadeOut();
         }
 
     }
@@ -125,8 +134,21 @@ public class ItemType extends GameComponent {
         startFadeOut = true;
         startFadeIn = false;
         timer = 0f;
+        bombTimer = 0f;
         status = this.INACTIVE;
         gameObject.render.setOpacity(1f);
+    }
+
+    /**
+     * Set how long a BOMB-type item should stay on the game.
+     * @param bombLife
+     */
+    public void setBombLife(float bombLife) {
+        this.bombLife = bombLife;
+    }
+
+    public float getBombLife() {
+        return bombLife;
     }
 
     public float getFadeDuration() {
