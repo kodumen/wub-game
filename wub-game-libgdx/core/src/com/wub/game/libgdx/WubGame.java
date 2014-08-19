@@ -86,7 +86,7 @@ public class WubGame extends ApplicationAdapter {
         ((Collider)shaft.getComponent("Collider")).setPolygon();
         ShaftAction shaftAction = (ShaftAction)shaft.getComponent("ShaftAction");
         shaftAction.setSpeed(25f);
-        shaftAction.setMaxSpeed(350f);
+        shaftAction.setMaxSpeed(275f);
         shaftAction.setSpeedIncrease(1.25f);
         shaftAction.setInitDirection(ShaftAction.CLKWISE);
 //        item.render.setTexture(PIE_0);
@@ -129,11 +129,11 @@ public class WubGame extends ApplicationAdapter {
         spritebatch.end();
 
         // Draw Collider Polygons
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0, 1, 1, 1);
-        drawColliders(playScreen, shapeRenderer);
-        shapeRenderer.end();
+//        shapeRenderer.setProjectionMatrix(camera.combined);
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        shapeRenderer.setColor(0, 1, 1, 1);
+//        drawColliders(playScreen, shapeRenderer);
+//        shapeRenderer.end();
 
         // HOLY SHIT AN FPS COUNTER!
         Gdx.graphics.setTitle(Gdx.graphics.getFramesPerSecond() + "FPS");
