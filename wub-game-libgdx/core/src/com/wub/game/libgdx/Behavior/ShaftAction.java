@@ -38,17 +38,23 @@ public class ShaftAction extends GameComponent {
         if(Gdx.input.isTouched() && !touched) {
             touched = true;
             // Get the itemColliders that collided with the shaft.
+            ItemType itemType = getCollidedItemType(itemColliders);
+            if(itemType != null) {
+                itemType.fadeOut();
+                System.out.println("HIT!");
+            }
             direction = direction == 0f ? initDirection : -direction;
-
         }
         else if(!Gdx.input.isTouched() && touched) touched = false;
         gameObject.transform.rotateBy(direction * speed * deltaTime);
     }
 
-    private GameObject getCollidedItem(Array<GameObject> ) {
+    private ItemType getCollidedItemType(Array<Collider> itemColliders) {
         for(int i = 0; i < itemColliders.size; i++) {
-
+            if(collider.collidesWith(itemColliders.get(i)))
+                return itemTypes.get(i);
         }
+        return null;
     }
 
     /**
@@ -58,7 +64,7 @@ public class ShaftAction extends GameComponent {
     public void setItems(Array<GameObject> items) {
         for(int i = 0; i < items.size; i++) {
             itemColliders.add((Collider)items.get(i).getComponent("Collider"));
-            itemTypes.add((ItemType)items.get(i).getComponent("ItemTypes"));
+            itemTypes.add((ItemType)items.get(i).getComponent("ItemType"));
         }
     }
 
