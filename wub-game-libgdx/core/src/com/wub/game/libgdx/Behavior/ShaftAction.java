@@ -14,7 +14,9 @@ public class ShaftAction extends GameComponent {
     private boolean touched;
 
     private int initDirection;
-    private Array<GameObject> items;
+    private Array<Collider> itemColliders;
+    private Array<ItemType> itemTypes;
+    private Collider collider;
 
     public static final int STOP = 0, CLKWISE = -1, CCLKWISE = 1;
 
@@ -23,17 +25,30 @@ public class ShaftAction extends GameComponent {
         speed = 0f;
         direction = STOP;
         touched = false;
-        items = null;
+        collider = null;
+        itemColliders = new Array<Collider>();
+        itemTypes = new Array<ItemType>();
     }
 
     @Override
     public void update(float deltaTime) {
+        // Get collider component on first run.
+        collider = collider == null ? (Collider)gameObject.getComponent("Collider") : collider;
+
         if(Gdx.input.isTouched() && !touched) {
             touched = true;
+            // Get the itemColliders that collided with the shaft.
             direction = direction == 0f ? initDirection : -direction;
+
         }
         else if(!Gdx.input.isTouched() && touched) touched = false;
         gameObject.transform.rotateBy(direction * speed * deltaTime);
+    }
+
+    private GameObject getCollidedItem(Array<GameObject> ) {
+        for(int i = 0; i < itemColliders.size; i++) {
+
+        }
     }
 
     /**
@@ -41,7 +56,10 @@ public class ShaftAction extends GameComponent {
      * @param items
      */
     public void setItems(Array<GameObject> items) {
-        this.items = items;
+        for(int i = 0; i < items.size; i++) {
+            itemColliders.add((Collider)items.get(i).getComponent("Collider"));
+            itemTypes.add((ItemType)items.get(i).getComponent("ItemTypes"));
+        }
     }
 
     public int getDirection() {

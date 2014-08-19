@@ -1,5 +1,7 @@
 package com.wub.game.libgdx.Behavior;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.wub.game.libgdx.GameComponent;
 import com.wub.game.libgdx.GameObject;
@@ -47,6 +49,10 @@ public class Collider extends GameComponent {
 
     public float[] getCollider() {
         return polygon.getTransformedVertices();
+    }
+
+    public boolean collidesWith(Collider collider) {
+        return Intersector.overlapConvexPolygons(this.getCollider(), collider.getCollider(), null);
     }
 
     @Override
