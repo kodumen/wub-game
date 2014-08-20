@@ -26,8 +26,8 @@ public class ItemManager extends GameComponent {
     public void create() {
         // Clone item
         Collider itemCollider = (Collider) item.getComponent("Collider");
-        ItemType itemType = (ItemType)item.getComponent("ItemType");
-        for(int i = 0; i < itemCount; i++) {
+        ItemType itemType = (ItemType) item.getComponent("ItemType");
+        for (int i = 0; i < itemCount; i++) {
             // Copy original item's properties to a new instance of a GameObject.
             GameObject copy = new GameObject(item.getName() + i);
             copy.transform.setWidth(item.transform.getWidth());
@@ -39,17 +39,17 @@ public class ItemManager extends GameComponent {
             copy.transform.setScaleX(item.transform.getScaleX());
             copy.transform.setScaleY(item.transform.getScaleY());
             copy.transform.setRotation((i * 360f / itemCount) + item.transform.getRotation());
-            if(item.render.hasTexture()) copy.render.setTexture(item.render.getTexture());
+            if (item.render.hasTexture()) copy.render.setTexture(item.render.getTexture());
 
             Collider copyCollider;
             copy.addComponent(new Collider());
-            copyCollider = (Collider)copy.getComponent("Collider");
+            copyCollider = (Collider) copy.getComponent("Collider");
             copyCollider.setPolygon(itemCollider.getPolygon().getVertices());
             copyCollider.update(0);
 
             ItemType copyItem;
             copy.addComponent(new ItemType());
-            copyItem = (ItemType)copy.getComponent("ItemType");
+            copyItem = (ItemType) copy.getComponent("ItemType");
             copyItem.setType(itemType.getType());
             copyItem.setTextureFromType();
             copyItem.setFadeDuration(itemType.getFadeDuration());
@@ -60,14 +60,15 @@ public class ItemManager extends GameComponent {
         }
 
         // Generate starting items.
-        for(int i = 0; i < startItemCount; i++) {
+        for (int i = 0; i < startItemCount; i++) {
             int itemNum;
             ItemType itemType1;
             do {
                 // Pick a random child from this GameObject.
-                itemNum = (int)(MathUtils.random(gameObject.getChildren().size - 1));
-                itemType1 = (ItemType)gameObject.getChild(itemNum).getComponent("ItemType");
-            } while(itemType1.getType() != ItemType.NONE); // We can't set the type of a child if it already has one so we pick again.
+                itemNum = (int) (MathUtils.random(gameObject.getChildren().size - 1));
+                itemType1 = (ItemType) gameObject.getChild(itemNum).getComponent("ItemType");
+            }
+            while (itemType1.getType() != ItemType.NONE); // We can't set the type of a child if it already has one so we pick again.
             itemType1.randomizeType();
         }
 
@@ -77,29 +78,39 @@ public class ItemManager extends GameComponent {
     @Override
     public void update(float deltaTime) {
         timer += deltaTime;
-        if(timer >= coolDownTime) {
-            // Count number of ACTIVE items.
-            // If it's less than maxItemCount we get items that are IDLE.
-            if(countStatus(ItemType.ACTIVE) < maxItemCount) {
+        if (timer >= coolDownTime) {
+            if (countStatus(ItemType.IDLE) > (itemCount - maxItemCount)) {
                 timer = 0;
                 // Get IDLE items
                 Array<ItemType> idleChildren = new Array<ItemType>();
-                for(int i = 0; i < childItemTypes.size; i++)
-                    if(childItemTypes.get(i).getStatus() == ItemType.IDLE)
+                for (int i = 0; i < childItemTypes.size; i++)
+                    if (childItemTypes.get(i).getStatus() == ItemType.IDLE)
                         idleChildren.add(childItemTypes.get(i));
 
                 // Pick a random type for a random item.
-                ItemType randIdle = null;
-                do {
-                    randIdle = childItemTypes.get(MathUtils.random(childItemTypes.size - 1));
-                } while(randIdle.getType() != ItemType.NONE);
-                randIdle.fadeIn();
+//                ItemType randIdle = null;
+//                do {
+//                    randIdle = childItemTypes.get(MathUtils.random(childItemTypes.size - 1));
+//                } while(randIdle.getType() != ItemType.NONE);
+//                randIdle.fadeIn();
+
+                // Pick random number of items and give them random types.
+                int randCount = MathUtils.random(1, idleChildren.size - (itemCount - maxItemCount));
+                for (int i = 0; i < randCount; i++) {
+                    ItemType newItem = null;
+                    do {
+                        newItem = idleChildren.get(MathUtils.random(idleChildren.size - 1));
+                    } while (newItem.getType() != ItemType.NONE);
+                    newItem.fadeIn();
+                }
+
             }
         }
     }
 
     /**
      * Set the maximum amount of items to be present at the same time.
+     *
      * @param maxItemCount
      */
     public void setMaxItemCount(int maxItemCount) {
@@ -112,6 +123,7 @@ public class ItemManager extends GameComponent {
 
     /**
      * Set the item that we clone from.
+     *
      * @param item must have Collider and ItemType components.
      */
     public void setItem(GameObject item) {
@@ -120,6 +132,7 @@ public class ItemManager extends GameComponent {
 
     /**
      * Set the number of items the ItemManager has.
+     *
      * @param itemCount
      */
     public void setItemCount(int itemCount) {
@@ -132,6 +145,7 @@ public class ItemManager extends GameComponent {
 
     /**
      * Set the number of items to generate at the start of the game.
+     *
      * @param startItemCount
      */
     public void setStartItemCount(int startItemCount) {
@@ -140,24 +154,26 @@ public class ItemManager extends GameComponent {
 
     /**
      * Returns an array of the ItemType components of this gameObject's children.
+     *
      * @return ItemType array
      */
     private Array<ItemType> getChildItemTypes() {
         Array<ItemType> r = new Array<ItemType>();
-        for(int i = 0; i < gameObject.getChildren().size; i++)
-            r.add((ItemType)gameObject.getChild(i).getComponent("ItemType"));
+        for (int i = 0; i < gameObject.getChildren().size; i++)
+            r.add((ItemType) gameObject.getChild(i).getComponent("ItemType"));
         return r;
     }
 
     /**
      * Returns the number of children whose status is the same as the one specified.
+     *
      * @param status status of the child.
      * @return number of children with the same status.
      */
     private int countStatus(int status) {
         int r = 0;
-        for(int i = 0; i < childItemTypes.size; i++)
-            if(childItemTypes.get(i).getStatus() == status) r++;
+        for (int i = 0; i < childItemTypes.size; i++)
+            if (childItemTypes.get(i).getStatus() == status) r++;
         return r;
     }
 }
