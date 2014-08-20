@@ -1,7 +1,6 @@
 package com.wub.game.libgdx.Behavior;
 
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.wub.game.libgdx.GameComponent;
 import com.wub.game.libgdx.GameObject;
@@ -40,10 +39,10 @@ public class Collider extends GameComponent {
         float width = gameObject.transform.getWidth();
         float height = gameObject.transform.getHeight();
         setPolygon(new float[]{
-            0f, 0f,
-            0f, height,
-            width, height,
-            width, 0f
+                0f, 0f,
+                0f, height,
+                width, height,
+                width, 0f
         });
     }
 

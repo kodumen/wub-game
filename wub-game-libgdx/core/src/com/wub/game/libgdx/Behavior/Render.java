@@ -39,10 +39,13 @@ public class Render extends GameComponent {
         this.color = color;
     }
 
-    public Color getColor() { return color; }
+    public Color getColor() {
+        return color;
+    }
 
     /**
      * Set this render's alpha.
+     *
      * @param a alpha value between 0 and 1.
      */
     public void setOpacity(float a) {

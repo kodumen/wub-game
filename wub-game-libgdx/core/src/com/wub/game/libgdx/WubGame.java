@@ -83,8 +83,8 @@ public class WubGame extends ApplicationAdapter {
         shaft.transform.setX(WIDTH / 2 - shaft.transform.getWidth() / 2);
         shaft.transform.setY(HEIGHT / 2);
         shaft.transform.setOrigin(shaft.transform.getWidth() / 2, 0f);
-        ((Collider)shaft.getComponent("Collider")).setPolygon();
-        ShaftAction shaftAction = (ShaftAction)shaft.getComponent("ShaftAction");
+        ((Collider) shaft.getComponent("Collider")).setPolygon();
+        ShaftAction shaftAction = (ShaftAction) shaft.getComponent("ShaftAction");
         shaftAction.setSpeed(25f);
         shaftAction.setMaxSpeed(275f);
         shaftAction.setSpeedIncrease(1.25f);
@@ -96,18 +96,18 @@ public class WubGame extends ApplicationAdapter {
         item.transform.setY(HEIGHT / 2);
         item.transform.setOrigin(item.transform.getWidth() / 2, 0f);
         item.transform.setRotation(11.25f);
-        ((Collider)item.getComponent("Collider")).setPolygon(new float[]{
+        ((Collider) item.getComponent("Collider")).setPolygon(new float[]{
                 0f, item.transform.getHeight() - 24f,
                 0f, item.transform.getHeight(),
                 item.transform.getWidth(), item.transform.getHeight(),
                 item.transform.getWidth(), item.transform.getHeight() - 24f
         });
-        ItemType itemType = (ItemType)item.getComponent("ItemType");
+        ItemType itemType = (ItemType) item.getComponent("ItemType");
         itemType.setFadeDuration(0.5f);
         itemType.setBombLife(7f);
         itemType.setType(ItemType.NONE);
         itemType.setTextureFromType();
-        ItemManager itemManager = (ItemManager)itemGroup.getComponent("ItemManager");
+        ItemManager itemManager = (ItemManager) itemGroup.getComponent("ItemManager");
         itemManager.setItem(item);
         itemManager.setItemCount(12);
         itemManager.setCoolDownTime(3f);
@@ -160,18 +160,18 @@ public class WubGame extends ApplicationAdapter {
         }
 
         if (gameObject.hasChildren()) {
-            for(int i = 0; i < gameObject.getChildren().size; i++)
+            for (int i = 0; i < gameObject.getChildren().size; i++)
                 draw(gameObject.getChild(i), batch);
         }
     }
 
     public void drawColliders(GameObject gameObject, ShapeRenderer shapeRenderer) {
         if (gameObject.hasComponent("Collider")) {
-            shapeRenderer.polygon(((Collider)gameObject.getComponent("Collider")).getCollider());
+            shapeRenderer.polygon(((Collider) gameObject.getComponent("Collider")).getCollider());
         }
 
         if (gameObject.hasChildren()) {
-            for(int i = 0; i < gameObject.getChildren().size; i++)
+            for (int i = 0; i < gameObject.getChildren().size; i++)
                 drawColliders(gameObject.getChild(i), shapeRenderer);
         }
     }

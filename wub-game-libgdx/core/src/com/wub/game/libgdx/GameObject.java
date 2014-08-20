@@ -65,15 +65,15 @@ public class GameObject {
             Collider collider = null;
             while (compIterator.hasNext()) {
                 comp = compIterator.next();
-                if(comp.getClass() == Collider.class) {
-                    collider = (Collider)comp;
+                if (comp.getClass() == Collider.class) {
+                    collider = (Collider) comp;
                     continue;
                 }
                 comp.update(deltaTime);
             }
             // Update collider last after all other components are updated.
             // This ensures that the collider will always be inline with the object's current transformation.
-            if(collider != null) collider.update(deltaTime);
+            if (collider != null) collider.update(deltaTime);
         }
 
         // Update children

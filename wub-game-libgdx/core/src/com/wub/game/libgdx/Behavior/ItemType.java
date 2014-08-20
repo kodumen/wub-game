@@ -34,12 +34,12 @@ public class ItemType extends GameComponent {
         timer += startFadeIn || startFadeOut ? deltaTime : 0f;
 
         float opacity = timer / fadeDuration;
-        if(startFadeIn) gameObject.render.setOpacity(opacity >= 1f ? 1f : opacity);
-        else if(startFadeOut) gameObject.render.setOpacity(1f - (opacity >= 1f ? 1f : opacity));
+        if (startFadeIn) gameObject.render.setOpacity(opacity >= 1f ? 1f : opacity);
+        else if (startFadeOut) gameObject.render.setOpacity(1f - (opacity >= 1f ? 1f : opacity));
 
-        if(timer >= fadeDuration) {
+        if (timer >= fadeDuration) {
             timer = 0f;
-            if(startFadeOut) {
+            if (startFadeOut) {
                 setType(NONE);
                 setTextureFromType();
                 status = IDLE;
@@ -47,9 +47,9 @@ public class ItemType extends GameComponent {
             startFadeOut = startFadeIn = false;
         }
 
-        if(type == BOMB) {
+        if (type == BOMB) {
             bombTimer += !startFadeOut ? deltaTime : 0f;
-            if(bombTimer >= bombLife) fadeOut();
+            if (bombTimer >= bombLife) fadeOut();
         }
 
     }
@@ -64,6 +64,7 @@ public class ItemType extends GameComponent {
 
     /**
      * Sets the duration of fade action.
+     *
      * @param fadeDuration
      */
     public void setFadeDuration(float fadeDuration) {
@@ -78,7 +79,7 @@ public class ItemType extends GameComponent {
      * Picks a random type from SCORE1 to BOMB (NONE not included) and assigns the appropriate texture.
      */
     public void randomizeType() {
-        setType((int)(MathUtils.random() * (BOMB - SCORE1 + 1)) + SCORE1);
+        setType((int) (MathUtils.random() * (BOMB - SCORE1 + 1)) + SCORE1);
         setTextureFromType();
     }
 
@@ -88,7 +89,7 @@ public class ItemType extends GameComponent {
      * Textures are dependent on PIE_X textures set in WubGame class.
      */
     public void setTextureFromType() {
-        switch(getType()) {
+        switch (getType()) {
             case NONE:
                 gameObject.render.removeTexture();
                 break;
@@ -141,6 +142,7 @@ public class ItemType extends GameComponent {
 
     /**
      * Set how long a BOMB-type item should stay on the game.
+     *
      * @param bombLife
      */
     public void setBombLife(float bombLife) {

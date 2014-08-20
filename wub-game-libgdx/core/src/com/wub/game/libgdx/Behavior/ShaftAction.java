@@ -121,6 +121,7 @@ public class ShaftAction extends GameComponent {
      * the game's class. This also sets the original speed of shaft. If you wish to change the speed, the only way is
      * by the increaseSpeed() function.
      * Other than that, there is none.
+     *
      * @param speed
      */
     public void setSpeed(float speed) {

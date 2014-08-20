@@ -53,8 +53,9 @@ public class Transform extends GameComponent {
         return rotation;
     }
 
-    /***
+    /**
      * Set the rotation in degrees.
+     *
      * @param rotation angle in degrees.
      */
     public void setRotation(float rotation) {
